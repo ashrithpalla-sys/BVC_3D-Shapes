@@ -1,0 +1,23 @@
+seed: 7
+device: auto
+data:
+  path: data/stools_ablation_7.npz
+  num_shapes: 480
+  points_per_shape: 256
+  train_fraction: 0.8
+  val_fraction: 0.1
+model:
+  latent_dim: 16
+  hidden_dim: 128
+training:
+  epochs: 20
+  batch_size: 32
+  learning_rate: 0.0005
+  beta: 0.0002
+  kl_warmup_epochs: 6
+  chamfer_chunk: 128
+  output_dir: runs/ablation
+evaluation:
+  num_samples: 24
+  interpolation_steps: 7
+

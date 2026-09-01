@@ -1,0 +1,101 @@
+[
+  {
+    "seed": 7,
+    "beta": 0.0,
+    "test_chamfer_mean": 0.04286215947164843,
+    "test_chamfer_std": 0.011801803623648017,
+    "latent_parameter_probe_r2": 0.44751237687410234,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.022655329894447743,
+    "generated_nearest_training_chamfer_mean": 0.13655001080284515,
+    "generated_stool_structure_fraction": 0.0
+  },
+  {
+    "seed": 7,
+    "beta": 0.0002,
+    "test_chamfer_mean": 0.046865448355674744,
+    "test_chamfer_std": 0.010906139030448674,
+    "latent_parameter_probe_r2": 0.45058060907196695,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.0349718704386506,
+    "generated_nearest_training_chamfer_mean": 0.07400813310717543,
+    "generated_stool_structure_fraction": 0.0
+  },
+  {
+    "seed": 7,
+    "beta": 0.001,
+    "test_chamfer_mean": 0.05885088622259597,
+    "test_chamfer_std": 0.008622814959347901,
+    "latent_parameter_probe_r2": 0.43783604203313886,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.041084719702688066,
+    "generated_nearest_training_chamfer_mean": 0.05911030760034919,
+    "generated_stool_structure_fraction": 0.20833333333333334
+  },
+  {
+    "seed": 17,
+    "beta": 0.0,
+    "test_chamfer_mean": 0.05615647463127971,
+    "test_chamfer_std": 0.012116209628362986,
+    "latent_parameter_probe_r2": 0.41324611509544196,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.02745987624363151,
+    "generated_nearest_training_chamfer_mean": 0.1974240674947699,
+    "generated_stool_structure_fraction": 0.08333333333333333
+  },
+  {
+    "seed": 17,
+    "beta": 0.0002,
+    "test_chamfer_mean": 0.054854318189124264,
+    "test_chamfer_std": 0.011207988520853637,
+    "latent_parameter_probe_r2": 0.44187740096972683,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.037477532109288975,
+    "generated_nearest_training_chamfer_mean": 0.14037356277306876,
+    "generated_stool_structure_fraction": 0.20833333333333334
+  },
+  {
+    "seed": 17,
+    "beta": 0.001,
+    "test_chamfer_mean": 0.05820248159579933,
+    "test_chamfer_std": 0.009934746392865628,
+    "latent_parameter_probe_r2": 0.47076313791722896,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.06352694544854552,
+    "generated_nearest_training_chamfer_mean": 0.058966967122008405,
+    "generated_stool_structure_fraction": 0.0
+  },
+  {
+    "seed": 29,
+    "beta": 0.0,
+    "test_chamfer_mean": 0.039886173947403826,
+    "test_chamfer_std": 0.010232961016556604,
+    "latent_parameter_probe_r2": 0.39844711813177575,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.02071966659710851,
+    "generated_nearest_training_chamfer_mean": 0.12361085787415504,
+    "generated_stool_structure_fraction": 0.16666666666666666
+  },
+  {
+    "seed": 29,
+    "beta": 0.0002,
+    "test_chamfer_mean": 0.039398483311136566,
+    "test_chamfer_std": 0.010301908453392003,
+    "latent_parameter_probe_r2": 0.460997314154868,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.030314279276184564,
+    "generated_nearest_training_chamfer_mean": 0.06773368564123909,
+    "generated_stool_structure_fraction": 0.08333333333333333
+  },
+  {
+    "seed": 29,
+    "beta": 0.001,
+    "test_chamfer_mean": 0.04105283428604404,
+    "test_chamfer_std": 0.00967128404365915,
+    "latent_parameter_probe_r2": 0.4481758504808443,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.04533779965497033,
+    "generated_nearest_training_chamfer_mean": 0.051361532571415104,
+    "generated_stool_structure_fraction": 0.0
+  }
+]

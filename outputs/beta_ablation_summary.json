@@ -1,0 +1,14 @@
+[
+  {"beta": 0.0, "seeds": 3, "test_chamfer_mean": 0.04630,
+   "test_chamfer_std_across_seeds": 0.00866,
+   "generated_pairwise_chamfer_mean": 0.02361,
+   "generated_nearest_training_chamfer_mean": 0.15253},
+  {"beta": 0.0002, "seeds": 3, "test_chamfer_mean": 0.04704,
+   "test_chamfer_std_across_seeds": 0.00773,
+   "generated_pairwise_chamfer_mean": 0.03425,
+   "generated_nearest_training_chamfer_mean": 0.09404},
+  {"beta": 0.001, "seeds": 3, "test_chamfer_mean": 0.05270,
+   "test_chamfer_std_across_seeds": 0.01009,
+   "generated_pairwise_chamfer_mean": 0.04998,
+   "generated_nearest_training_chamfer_mean": 0.05648}
+]
