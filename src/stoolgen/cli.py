@@ -9,7 +9,7 @@ import numpy as np
 
 from .config import load_config
 from .data import generate_dataset, validate_archive
-from .evaluation import evaluate, interpolate
+from .evaluation import evaluate, interpolate, latent_traversal
 from .training import train
 from .visualization import contact_sheet
 
@@ -40,4 +40,4 @@ def main() -> None:
         train(config, "vae")
         print(json.dumps(evaluate(config, "vae"), indent=2))
         interpolate(config)
-
+        latent_traversal(config)
