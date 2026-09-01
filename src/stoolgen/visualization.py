@@ -11,7 +11,9 @@ from PIL import Image, ImageDraw, ImageFont
 def render_cloud(points: np.ndarray, size: int = 320, title: str = "") -> Image.Image:
     """Render an isometric point-cloud view with a simple depth cue."""
     points = np.asarray(points)
-    azimuth, elevation = np.deg2rad(38), np.deg2rad(24)
+    # A steep elevation makes the vertical stool structure legible while the
+    # azimuth still separates its four legs in projection.
+    azimuth, elevation = np.deg2rad(38), np.deg2rad(62)
     rz = np.array([[np.cos(azimuth), -np.sin(azimuth), 0],
                    [np.sin(azimuth), np.cos(azimuth), 0], [0, 0, 1]])
     rx = np.array([[1, 0, 0], [0, np.cos(elevation), -np.sin(elevation)],
@@ -73,4 +75,3 @@ def loss_plot(history: list[dict], path: str | Path, size: tuple[int, int] = (80
     destination.parent.mkdir(parents=True, exist_ok=True)
     image.save(destination)
     return destination
-
