@@ -1,0 +1,21 @@
+{
+  "experiment": "submission_seed_7",
+  "dataset": {"shapes": 1000, "points_per_shape": 384},
+  "model": {"latent_dim": 24, "hidden_dim": 192, "epochs": 40},
+  "autoencoder": {
+    "test_chamfer_mean": 0.022984956791624427,
+    "test_chamfer_std": 0.0067143271325531785,
+    "latent_parameter_probe_r2": 0.6498734410712348,
+    "elapsed_seconds": 15.56431479199091
+  },
+  "vae": {
+    "test_chamfer_mean": 0.022349023409187794,
+    "test_chamfer_std": 0.005885779636778515,
+    "latent_parameter_probe_r2": 0.6428226504287149,
+    "generated_noncollapsed_fraction": 1.0,
+    "generated_pairwise_chamfer_mean": 0.06866146433492039,
+    "generated_nearest_training_chamfer_mean": 0.06728831212967634,
+    "generated_stool_structure_fraction": 0.421875,
+    "elapsed_seconds": 13.155408374994295
+  }
+}

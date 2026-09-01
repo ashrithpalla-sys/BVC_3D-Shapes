@@ -29,9 +29,18 @@ loss = symmetric squared Chamfer(reconstruction, input) + beta * KL(q(z|x) || N(
 
 - **Reconstruction:** per-shape Chamfer distance on the held-out test split.
 - **Generation smoke check:** fraction of samples with nontrivial extent on all axes.
+- **Coarse structural validity:** presence of a wide upper region, lower supports, and floor-
+  reaching points. This is deliberately named as a heuristic rather than mesh validity.
+- **Diversity and novelty:** mean pairwise generated Chamfer and nearest-training Chamfer.
 - **Latent probe:** ridge regression fitted on 70% of encoded examples and scored on 30%.
 - **Qualitative:** training examples, reconstructions, prior samples, interpolation, traversal.
 
 The probe is a readability diagnostic, not evidence of disentanglement. Procedural metadata
 is returned for analysis but never consumed by either model. Evaluation never updates weights.
 
+## Final reproducibility settings
+
+The submission config contains every final setting: 1,000 shapes, 384 points, seed 7, 40
+epochs, and a 12-epoch KL warmup. Each training run records device, Python and PyTorch versions,
+parameter count, elapsed time, and best validation loss. The β experiment holds architecture
+and data size fixed within each seed and repeats β ∈ {0, 0.0002, 0.001} over three seeds.

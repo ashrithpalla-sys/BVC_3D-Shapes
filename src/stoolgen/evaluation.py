@@ -131,14 +131,21 @@ def evaluate(config: dict, kind: str) -> dict[str, float]:
     return metrics
 
 
-def interpolate(config: dict, first: int = 0, second: int = 1) -> np.ndarray:
+def interpolate(config: dict, first: int | None = None, second: int | None = None) -> np.ndarray:
     device = choose_device(config.get("device", "auto"))
     model, _ = load_checkpoint(Path(config["training"]["output_dir"]) / "vae" / "best.pt", device)
     data_cfg = config["data"]
     dataset = StoolPointCloudDataset(data_cfg["path"], "test", config["seed"],
                                      data_cfg["train_fraction"], data_cfg["val_fraction"])
-    pair = torch.stack((dataset[first]["points"], dataset[second]["points"])).to(device)
     with torch.no_grad():
+        # By default choose separated encoded examples so the submitted figure
+        # demonstrates a meaningful transition rather than two near duplicates.
+        if first is None or second is None:
+            candidates = torch.stack([dataset[i]["points"] for i in range(min(len(dataset), 64))]).to(device)
+            candidate_latents = _latent(model, candidates)
+            flat_index = int(torch.cdist(candidate_latents, candidate_latents).argmax())
+            first, second = divmod(flat_index, len(candidates))
+        pair = torch.stack((dataset[first]["points"], dataset[second]["points"])).to(device)
         endpoints = _latent(model, pair)
         values = torch.linspace(0, 1, config["evaluation"]["interpolation_steps"], device=device)
         latent = torch.stack([(1 - value) * endpoints[0] + value * endpoints[1] for value in values])
