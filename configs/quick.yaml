@@ -1,0 +1,22 @@
+seed: 7
+device: auto
+data:
+  path: data/stools_quick.npz
+  num_shapes: 160
+  points_per_shape: 256
+  train_fraction: 0.8
+  val_fraction: 0.1
+model:
+  latent_dim: 16
+  hidden_dim: 96
+training:
+  epochs: 8
+  batch_size: 16
+  learning_rate: 0.001
+  beta: 0.0005
+  chamfer_chunk: 128
+  output_dir: runs/quick
+evaluation:
+  num_samples: 24
+  interpolation_steps: 7
+
