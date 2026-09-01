@@ -39,6 +39,48 @@ def _linear_probe(latents: np.ndarray, parameters: np.ndarray) -> float:
     return float(np.mean(1 - residual / total))
 
 
+def _cloud_distance(first: np.ndarray, second: np.ndarray, device: torch.device) -> float:
+    """Evaluate one pair without keeping a large all-pairs matrix in memory."""
+    a = torch.from_numpy(first).to(device)[None]
+    b = torch.from_numpy(second).to(device)[None]
+    return float(chamfer_distance(a, b).cpu())
+
+
+def _sample_quality(samples: np.ndarray, reference: np.ndarray,
+                    device: torch.device) -> dict[str, float]:
+    """Measure diversity, training-set proximity, and coarse stool structure.
+
+    Structural validity deliberately checks only representation-level evidence:
+    a wide upper seat region, points reaching the floor, and a nonempty lower body.
+    It does not claim mesh watertightness or mechanical stability.
+    """
+    subset = samples[: min(24, len(samples))]
+    references = reference[: min(64, len(reference))]
+    pairwise = []
+    for i in range(len(subset)):
+        for j in range(i + 1, min(i + 5, len(subset))):
+            pairwise.append(_cloud_distance(subset[i], subset[j], device))
+    nearest = []
+    for sample in subset:
+        nearest.append(min(_cloud_distance(sample, target, device) for target in references))
+    valid = []
+    for sample in samples:
+        top = sample[sample[:, 2] > 0.55]
+        lower = sample[sample[:, 2] < 0.25]
+        top_extent = np.ptp(top[:, :2], axis=0) if len(top) else np.zeros(2)
+        valid.append(
+            len(top) >= len(sample) * 0.12
+            and len(lower) >= len(sample) * 0.25
+            and np.all(top_extent > 0.35)
+            and sample[:, 2].min() < -0.65
+        )
+    return {
+        "generated_pairwise_chamfer_mean": float(np.mean(pairwise)),
+        "generated_nearest_training_chamfer_mean": float(np.mean(nearest)),
+        "generated_stool_structure_fraction": float(np.mean(valid)),
+    }
+
+
 def evaluate(config: dict, kind: str) -> dict[str, float]:
     device = choose_device(config.get("device", "auto"))
     checkpoint_path = Path(config["training"]["output_dir"]) / kind / "best.pt"
@@ -76,6 +118,9 @@ def evaluate(config: dict, kind: str) -> dict[str, float]:
             samples = model.sample(config["evaluation"]["num_samples"], device).cpu().numpy()
         extents = np.ptp(samples, axis=1)
         metrics["generated_noncollapsed_fraction"] = float(np.mean(np.all(extents > 0.08, axis=1)))
+        with np.load(data_cfg["path"]) as archive:
+            reference = archive["points"].astype(np.float32)
+        metrics.update(_sample_quality(samples, reference, device))
         contact_sheet(samples[:12], "figures/generated_samples.png")
     results_dir = Path(config["training"]["output_dir"]) / kind
     (results_dir / "metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")

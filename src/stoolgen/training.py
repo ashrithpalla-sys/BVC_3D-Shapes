@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import platform
+import time
 from pathlib import Path
 
 import torch
@@ -60,11 +62,16 @@ def train(config: dict, kind: str) -> Path:
     output_dir = Path(train_cfg["output_dir"]) / kind
     output_dir.mkdir(parents=True, exist_ok=True)
     history, best = [], float("inf")
+    started = time.perf_counter()
     for epoch in range(1, train_cfg["epochs"] + 1):
-        train_metrics = _epoch(model, loaders[0], optimizer, device, train_cfg["beta"], train_cfg["chamfer_chunk"])
+        # Warming up KL lets the decoder first learn recognizable geometry before
+        # the approximate posterior is pulled toward the sampling prior.
+        warmup = max(int(train_cfg.get("kl_warmup_epochs", 1)), 1)
+        beta = train_cfg["beta"] * min(epoch / warmup, 1.0)
+        train_metrics = _epoch(model, loaders[0], optimizer, device, beta, train_cfg["chamfer_chunk"])
         with torch.no_grad():
-            val_metrics = _epoch(model, loaders[1], None, device, train_cfg["beta"], train_cfg["chamfer_chunk"])
-        record = {"epoch": epoch, "train": train_metrics, "val": val_metrics}
+            val_metrics = _epoch(model, loaders[1], None, device, beta, train_cfg["chamfer_chunk"])
+        record = {"epoch": epoch, "beta": beta, "train": train_metrics, "val": val_metrics}
         history.append(record)
         print(f"epoch {epoch:03d} train={train_metrics['loss']:.5f} val={val_metrics['loss']:.5f}")
         if val_metrics["loss"] < best:
@@ -72,6 +79,16 @@ def train(config: dict, kind: str) -> Path:
             torch.save({"model": model.state_dict(), "kind": kind, "config": config,
                         "epoch": epoch, "val": val_metrics}, output_dir / "best.pt")
     (output_dir / "history.json").write_text(json.dumps(history, indent=2), encoding="utf-8")
+    metadata = {
+        "device": str(device),
+        "python": platform.python_version(),
+        "torch": torch.__version__,
+        "trainable_parameters": sum(parameter.numel() for parameter in model.parameters()),
+        "elapsed_seconds": time.perf_counter() - started,
+        "best_validation_loss": best,
+        "epochs": train_cfg["epochs"],
+    }
+    (output_dir / "run_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return output_dir / "best.pt"
 
 
@@ -87,4 +104,3 @@ def np_load_shape(path: str | Path) -> int:
     import numpy as np
     with np.load(path) as archive:
         return int(archive["points"].shape[1])
-

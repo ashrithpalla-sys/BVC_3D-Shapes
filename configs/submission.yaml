@@ -1,0 +1,23 @@
+seed: 7
+device: auto
+data:
+  path: data/stools_submission.npz
+  num_shapes: 1000
+  points_per_shape: 384
+  train_fraction: 0.8
+  val_fraction: 0.1
+model:
+  latent_dim: 24
+  hidden_dim: 192
+training:
+  epochs: 40
+  batch_size: 32
+  learning_rate: 0.0005
+  beta: 0.0002
+  kl_warmup_epochs: 12
+  chamfer_chunk: 192
+  output_dir: runs/submission
+evaluation:
+  num_samples: 64
+  interpolation_steps: 7
+

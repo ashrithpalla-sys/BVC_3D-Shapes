@@ -14,9 +14,9 @@ training:
   batch_size: 32
   learning_rate: 0.0005
   beta: 0.001
+  kl_warmup_epochs: 20
   chamfer_chunk: 256
   output_dir: runs/full
 evaluation:
   num_samples: 100
   interpolation_steps: 9
-
