@@ -228,6 +228,26 @@ folding-based decoder, followed by point-to-mesh conversion so I could measure c
 watertightness, and support. I would also explore a conditional VAE to ask whether height, seat
 shape, or leg spread can be controlled intentionally at generation time.
 
+## Use of AI
+
+I used Codex as an assistant throughout this project. It helped me turn the initial idea into a
+clear implementation plan, organize the repository into manageable stages, debug code, write
+tests, and create some of the figures and visual layouts used in the README and PDF report. I
+also used it to help structure the report, compare experiment outputs, and check whether my
+interpretation of the results was supported by the metrics.
+
+I treated AI as a tool for making the engineering and research process more efficient, not as a
+replacement for understanding the project. I made the main choices about the shape family,
+point-cloud representation, model comparison, experiments, and claims. I reviewed the generated
+code, ran the full pipeline, inspected the visuals, questioned results that looked suspicious,
+and changed the evaluation when the original latent-probe score turned out to be misleading.
+
+Working this way helped me get better results while still understanding how the procedural
+generator, PointNet-style encoder, VAE, Chamfer loss, KL regularization, and evaluation metrics
+fit together. It also showed me how to use AI productively: give it a clear goal, break the work
+into verifiable steps, test what it produces, and keep the final decisions grounded in actual
+evidence.
+
 ## Repository map
 
 ```text
