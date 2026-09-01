@@ -12,6 +12,8 @@ PointNet-style autoencoder and VAE, and then investigated reconstruction, random
 interpolation, latent structure, and the effect of KL regularization. This README contains the
 full project outline, process, operating instructions, results, visuals, lessons, and takeaways.
 
+**[Download the visual project writeup (PDF)](output/pdf/BVC_3D_Stool_Generation_Writeup.pdf)**
+
 ![Procedural training examples](figures/training_samples.png)
 
 ## Why this project is distinct
