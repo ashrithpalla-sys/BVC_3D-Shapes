@@ -201,7 +201,7 @@ model could learn. The generator was not merely preprocessing—it defined the w
 was trying to imitate.
 
 For a longer first-person reflection, see [What I Learned](docs/WHAT_I_LEARNED.md). The full
-experimental narrative is in [the report](docs/WRITEUP.md), and chronological decisions are in
+experimental narrative is in [the project overview](docs/OVERVIEW.md), and chronological decisions are in
 [the research log](docs/RESEARCH_LOG.md).
 
 ## Main takeaways
